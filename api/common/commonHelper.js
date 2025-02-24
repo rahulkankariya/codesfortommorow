@@ -42,6 +42,29 @@ module.exports = {
                 reject({ executed: 0, data: {} });
             }
         })
+    },
+    validateTokenSocket:(socket)=>{
+        return new Promise((resolve,reject) => {
+            try {
+               
+                
+                database.executeQuery(
+                    storeProcudures.validateToken,[
+                        socket.data.uniqueId,
+                        socket.data.id
+                    ],
+                    '', function(err,rows){
+                        if(rows[0][0].res){
+                            resolve({ executed: 1, data: {} });
+                        }else{
+                            resolve({ executed: 0, data: {} });
+                        }
+                })
+            } catch (error) {
+                console.log("err==",error)
+                reject({ executed: 0, data: {} });
+            }
+        })
     }
 
 }
